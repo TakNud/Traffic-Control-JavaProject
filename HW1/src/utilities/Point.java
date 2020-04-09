@@ -1,8 +1,8 @@
 package utilities;
-
+import java.util.Random;
 public class Point {
 	
-	public static final int MAX_X = 1000000;
+	public static final double MAX_X = 1000000.000;
 	public static final int MIN_X = 0;
 	public static final int MAX_Y = 800;
 	public static final int MIN_Y = 0;
@@ -16,11 +16,15 @@ public class Point {
 	
 	public Point (double x, double y) {
 		if(!(this.setX(x))){
-			this.x=0;
+			Random r= new Random();
+			this.x= Math.random()* r.nextDouble();
+			System.out.println ("therefore has been replaced with"+x);
 		}
 		if (!(this.setY(y))) {
-			this.y=0;
+			this.y= 800* Math.random();
+			System.out.println ("therefore has been replaced with"+x);
 		}
+		System.out.println ("Point ("+ x+ "," + y +") has been created!");
 	}
 	
 	public Point (Point other) {
@@ -41,6 +45,7 @@ public class Point {
 	
 	public boolean setX(double x) {
 		if (x> MAX_X || x< MIN_X) {
+			System.out.println("The vlaue"+ x +"is illegal for X");
 			return false;
 		}
 		this.x=x;
@@ -48,6 +53,7 @@ public class Point {
 	}
 	public boolean setY(double y) {
 		if (y> MAX_Y || y< MIN_Y) {
+			System.out.println("The vlaue"+ y +"is illegal for Y");
 			return false;
 		}
 		this.y=y;
