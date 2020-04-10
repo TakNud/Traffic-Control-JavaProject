@@ -11,9 +11,32 @@ public class VehicleType {
 		this.speed=speed;
 	}
 
-	//צריך לבדוק את הפונקציה הזאת -משתגעת
-	@SuppressWarnings("null")
-	public static ArrayList<String> getRandomVehicleTypes() {
+	//FIXED!!!
+	//RETURN STRING FOR OBJ
+	public static String getRandomVehicleTypes() {
+		//String array
+		String[] strings = {"Bus", "Taxi", "Private",
+		"MotorBike", "Bicycle", "Track", "FullTrack"}; 
+		int index = (int)(Math.random() * 10);
+		return strings[index];
+		}
+	//RETURN ARRYLIST FOR ROAD
+	public static ArrayList<String> getRandomListVehicleTypes() {
+		//String array
+		String[] strings = {"Bus", "Taxi", "Private",
+		"MotorBike", "Bicycle", "Track", "FullTrack"}; 
+		ArrayList <String> ListVehicleTypes= new ArrayList<String>();
+		for (int i=0;i<=5;i++) {
+			int index = (int)(Math.random() * 6);
+			if (!ListVehicleTypes.contains(strings[index])) {//check existence
+				ListVehicleTypes.add(strings[index]);
+				}
+			}
+		return ListVehicleTypes;
+		}
+ 
+
+		/*
 	    int leftLimit = 65; // numeral 'A'
 	    int rightLimit = 90; // letter 'Z'
 	    int targetStringLength = 5;
@@ -28,8 +51,9 @@ public class VehicleType {
 	    ArrayList<String> newVehicleType = null;
 	    newVehicleType.add(randomSpeed,generatedString);
 	    return newVehicleType;
+	    
 	}
-	
+	*/
 	
 
 

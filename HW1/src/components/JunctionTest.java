@@ -26,11 +26,13 @@ public static void testJunction() {
 			int j=new Random().nextInt(arr.length);
 			int k=new Random().nextInt(arr.length);
 			if (!arr[j].equals(arr[k])) {
-				arrR[i]=new Road(arr[j],arr[k], VehicleType.getRandomVehicleTypes(), false,true);
+				arrR[i]=new Road(arr[j],arr[k], VehicleType.getRandomListVehicleTypes(), false,true);
+				arr[j].setExitingRoads(arrR[i]);
+				arr[k].setEnteringRoads(arrR[i]);
 				System.out.println(arrR[i].toString() + " has been created");
 			}
 			else i--;
-			
+	 		
 		}
 		
 		for (int i=0;i<arr.length;i++) {
@@ -50,14 +52,16 @@ public static void testJunction() {
 			
 			System.out.println(arr[i].toString() + " LIGHTS CHECK");
 			arr[i].setLightsOn();
+			/*
 			for (int j=0; j<5;j++) {
 				arr[i].changeLight();
 			}
+			*/
 		}
 		
-		//for (int i=0; i<arrR.length;i++) {
-			//System.out.println(arrR[i].toString() + ": " + arrR[i].getAllowedVehicle() + " lenth: " + arrR[i].getLength() + " Max Speed: " + arrR[i].getMaxSpeed());
-		//}
+		for (int i=0; i<arrR.length;i++) {
+			System.out.println(arrR[i].toString() + ": " + arrR[i].getAllowedVehicle() + " lenth: " + arrR[i].getLength() + " Max Speed: " + arrR[i].getMaxSpeed());
+		}
 		
 		
 	}
