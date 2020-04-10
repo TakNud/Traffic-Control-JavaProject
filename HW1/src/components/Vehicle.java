@@ -11,7 +11,9 @@ public class Vehicle {
 	private double spentTime;
 	
 	public Vehicle(int id, String type, Junction lastJunction) {
-		
+		this.id = id;
+		this.type = type;
+		this.lastJunction = lastJunction;
 	}
 	
 	public void move() {
