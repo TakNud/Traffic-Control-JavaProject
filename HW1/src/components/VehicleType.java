@@ -3,33 +3,37 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Random;
 public class VehicleType {
-	private Vehicle typeName;
+	private String typeName;
 	private int speed;
 	
-	public VehicleType(Vehicle name, int speed) {
+	public VehicleType(String name, int speed) {
 		this.typeName=name;
 		this.speed=speed;
 	}
 
 	//FIXED!!!
 	//RETURN STRING FOR OBJ
-	public static String getRandomVehicleTypes() {
+	public static VehicleType getRandomVehicleTypes() {
 		//String array
 		String[] strings = {"Bus", "Taxi", "Private",
 		"MotorBike", "Bicycle", "Track", "FullTrack"}; 
-		int index = (int)(Math.random() * 10);
-		return strings[index];
+		int index = (int)(Math.random() * 6);
+		int newSpeed= new Random().nextInt(100) ;
+		VehicleType vehicle = new VehicleType(strings[index],newSpeed);
+		return vehicle;
 		}
 	//RETURN ARRYLIST FOR ROAD
-	public static ArrayList<String> getRandomListVehicleTypes() {
+	public static ArrayList<VehicleType> getRandomListVehicleTypes() {
 		//String array
 		String[] strings = {"Bus", "Taxi", "Private",
 		"MotorBike", "Bicycle", "Track", "FullTrack"}; 
-		ArrayList <String> ListVehicleTypes= new ArrayList<String>();
+		ArrayList <VehicleType> ListVehicleTypes= new ArrayList<VehicleType>();
 		for (int i=0;i<=5;i++) {
 			int index = (int)(Math.random() * 6);
+			int speed = new Random().nextInt(100);
 			if (!ListVehicleTypes.contains(strings[index])) {//check existence
-				ListVehicleTypes.add(strings[index]);
+				VehicleType Vehicle= new VehicleType(strings[index],speed);
+				ListVehicleTypes.add(Vehicle);
 				}
 			}
 		return ListVehicleTypes;
@@ -54,12 +58,15 @@ public class VehicleType {
 	    
 	}
 	*/
-	
-
-
-
-public static void main (String[] args) {
-	System.out.print(getRandomVehicleTypes());
+	//GETTERS&& SETTERS
+	public String getName() {
+		return this.typeName;
+	}
+	public int getSpeed() {
+		return this.speed;
+	}
+	public String toString() {
+		return this.typeName +", AVG speed:"+ this.speed;
 }
 }
 	

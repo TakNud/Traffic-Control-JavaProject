@@ -22,7 +22,7 @@ public class Junction {
 		this.hasLights= new Random().nextBoolean();
 		enetringRoads= new ArrayList<Road>();
 		exitingRoads=new ArrayList<Road>();
-		//System.out.
+		System.out.println("Junction:->"+this.junctionName+" has been created");
 	}
 	//
 	public void changeLight() {
@@ -66,7 +66,13 @@ public class Junction {
 	public String getNameJunc() {
 		return this.junctionName;
 	}
+	public int getDelay() {
+		return this.delay;
+	}
 	//FIXED!!!
+	public boolean getHasLight() {
+		return this.hasLights;
+	}
 	public void setLightsOn() {
 		//this.hasLights=true;
 		this.delay=(int) (new Random().nextInt(10));

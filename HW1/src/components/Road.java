@@ -7,7 +7,7 @@ public class Road {
 	
 	private Junction fromJunc;
 	private Junction toJunc;
-	private ArrayList<String> allowedVehicles;
+	private ArrayList<VehicleType> allowedVehicles;
 	private boolean isOpen;
 	private boolean isEnabled;
 	private double length;
@@ -21,8 +21,9 @@ public class Road {
 		this.isEnabled= new Random().nextBoolean();
 		this.length= this.countLength();
 		this.maxSpeed= new Random().nextInt(100);
+		System.out.println(this.toString() + " has been created");
 	}
-	public Road(Junction from, Junction to, ArrayList<String> allowed, boolean open, boolean enabled) {
+	public Road(Junction from, Junction to, ArrayList<VehicleType> allowed, boolean open, boolean enabled) {
 		this.fromJunc=from;
 		this.toJunc= to;
 		this.allowedVehicles= allowed;
@@ -30,21 +31,21 @@ public class Road {
 		this.isEnabled= enabled;
 		this.length= this.countLength();
 		this.maxSpeed= new Random().nextInt(100);
-		
+		System.out.println(this.toString() + " has been created");
 	}
 	
-	public void addVehicleType(String type) {
+	public void addVehicleType(VehicleType type) {
 		allowedVehicles.add(type);
 		
 	}
 	//Calculate the length beetween roads
 	public double countLength() {
-		double calcX=Math.abs(this.toJunc.getLocation().getX())+
+		double calcX=Math.abs(this.toJunc.getLocation().getX())-
 				Math.abs(this.fromJunc.getLocation().getX());
-		double calcY= Math.abs(this.toJunc.getLocation().getY())+
+		double calcY= Math.abs(this.toJunc.getLocation().getY())-
 				Math.abs(this.fromJunc.getLocation().getY());
-		this.length = calcX+calcY;
-		return this.length;
+		this.length = Math.pow(calcX,calcX)+Math.pow(calcY,calcY);
+		return Math.sqrt(this.length);
 		
 		
 	}
@@ -52,7 +53,7 @@ public class Road {
 	public int getMaxSpeed() {
 		return this.maxSpeed;
 	}
-	public ArrayList<String> getAllowedVehicle(){
+	public ArrayList<VehicleType> getAllowedVehicle(){
 		return this.allowedVehicles;
 	}
 	public double getLength() {
@@ -60,7 +61,7 @@ public class Road {
 	}
 	public void setIsOpen(boolean what) {
 		isOpen=what;
-		System.out.println("Road from-"+ this.fromJunc.getNameJunc() +" to-->"+
+		System.out.println("Road from "+ this.fromJunc.getNameJunc() +" to-->"+
 		this.toJunc.getNameJunc()+": Green Light");
 	}
 	

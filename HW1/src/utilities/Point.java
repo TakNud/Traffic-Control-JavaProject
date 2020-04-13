@@ -15,18 +15,21 @@ public class Point {
 	}
 	
 	public Point (double x, double y) {
-		if(!(this.setX(x))){
-			Random r= new Random();
-			this.x= Math.random()* r.nextDouble();
-			System.out.println ("therefore has been replaced with"+x);
+		if(!this.setX(x)){
+			this.setX( new Random().nextDouble()*1000000.000);
+			System.out.println ("therefore has been replaced with"+this.x);
 		}
+		else
+			this.setX(x);
 		if (!(this.setY(y))) {
-			this.y= 800* Math.random();
+			this.setY( 800* new Random().nextDouble());
 			System.out.println ("therefore has been replaced with"+x);
 		}
-		System.out.println ("Point ("+ x+ "," + y +") has been created!");
+		else 
+			this.setY(y);
+		System.out.println ("Point ("+ this.x+ "," + this.y +") has been created!");
 	}
-	
+		
 	public Point (Point other) {
 		if(other == null) {
 			other = new Point(0, 0);
@@ -48,8 +51,10 @@ public class Point {
 			System.out.println("The vlaue"+ x +"is illegal for X");
 			return false;
 		}
-		this.x=x;
-		return true;
+		else {
+			this.x=x;
+			return true;
+		}
 	}
 	public boolean setY(double y) {
 		if (y> MAX_Y || y< MIN_Y) {
