@@ -61,8 +61,10 @@ public class Road {
 	}
 	public void setIsOpen(boolean what) {
 		isOpen=what;
-		System.out.println("Road from "+ this.fromJunc.getNameJunc() +" to-->"+
-		this.toJunc.getNameJunc()+": Green Light");
+		if (isOpen) {
+			System.out.println("Road from "+ this.fromJunc.getNameJunc() +" to-->"+
+			this.toJunc.getNameJunc()+": Green Light");
+		}
 	}
 	
 	// m= The Sentence like Example process

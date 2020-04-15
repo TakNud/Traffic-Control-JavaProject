@@ -16,6 +16,8 @@ public class Junction {
 	private ArrayList<Road> vehicles;
 	
 	//Constructor
+	public Junction () {
+	}
 	public Junction(String name, Point loc) {
 		this.junctionName=name;
 		this.location=loc;
@@ -23,14 +25,18 @@ public class Junction {
 		enetringRoads= new ArrayList<Road>();
 		exitingRoads=new ArrayList<Road>();
 		System.out.println("Junction:->"+this.junctionName+" has been created");
+		
 	}
 	//
 	public void changeLight() {
 		if (hasLights) {
-			for ( int i=0; i< this.enetringRoads.size();i++) {
-				this.enetringRoads.get(i).setIsOpen(false);
+			System.out.println("Junction"+this.getNameJunc()+
+					": traffic ligth ON. Delay time is :"+this.delay);
+			for ( int i=0; i< this.exitingRoads.size();i++) {
+				this.exitingRoads.get(i).setIsOpen(false);
 			}
-			this.enetringRoads.get(1).setIsOpen(true);
+			int index= Integer.parseInt(junctionName);
+			this.exitingRoads.get(0).setIsOpen(true);
 		}
 		else 
 			System.out.println("Junction"+this.junctionName+": no entering road. traffic lights cant be turn on!");
@@ -41,8 +47,7 @@ public class Junction {
 	}
 	// check equals between 2 junction Objs 
 	public boolean equals(Junction other) {
-		 if (this.delay==other.delay && this.hasLights== other.hasLights
-				&& this.junctionName== other.junctionName) {
+		 if (junctionName== other.junctionName) {
 			 return true;
 		 }
 		 else
@@ -78,9 +83,9 @@ public class Junction {
 		this.delay=(int) (new Random().nextInt(10));
 		System.out.println("Junction"+this.getNameJunc()+
 				": traffic ligth ON. Delay time is :"+this.delay);
-		for (int i = 0 ; i<enetringRoads.size();i++) {
-			this.enetringRoads.get(i).setIsOpen(true);
-			}
+			this.hasLights=true;
+			//int index= Integer.parseInt(junctionName);
+			this.exitingRoads.get(exitingRoads.size()).setIsOpen(true);
 		}
 	
 	public Point getLocation(){

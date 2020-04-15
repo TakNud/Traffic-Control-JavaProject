@@ -35,15 +35,38 @@ public class Map {
 			else i--;
 	 		
 		}
-		/*
-		Junction arr[]=new Junction[20];
-		for (int i=0;i<20;i++) {
-			arr[i]=new Junction(new String("" +i),new Point(-1,-1));
-			Road e= new Road(arr[i]);
-			arr[i].setEnteringRoads(e);
-		}
-		*/
 	}
+	//ConStructor For Sample with only get one value (junction , road is random)
+	/*
+	public Map (int junction) {
+		int indexFromListJunc=0;
+		this.junctions= new ArrayList<Junction>();
+		this.roads= new ArrayList<Road>();
+		Junction arr[]=new Junction[junction];
+		for (int i=0;i<junction;i++) {
+			double x= new Random().nextDouble()*100000;
+			double y= new Random().nextDouble()*800;
+			arr[i]=new Junction(new String("" +i),new Point(x,y));	//create new junction
+			this.junctions.add(arr[i]);// add it to LIST
+			}
+		for (int w=0; w<arr.length;w++) {
+			int numOfRoad= new Random().nextInt(8);
+			Road arrR[]=new Road[numOfRoad];
+			for (int j=0; j<numOfRoad ; j++) {// create Random number of Roads for junction
+				int z=new Random().nextInt(arr.length);
+				int k=new Random().nextInt(arr.length);
+				arrR[j]= new Road (arr[z],arr[k], VehicleType.getRandomListVehicleTypes(), false,true);
+				this.roads.add(arrR[j]);
+				arr[k].setEnteringRoads(arrR[j]);
+				arr[z].setEnteringRoads(arrR[j]);
+				if (arr[z].getHasLight()) {
+					arr[z].changeLight();
+				}
+		}
+
+		}
+	}
+	*/
 	// Con get numbers to build map - RANDOMLY
 	public Map(int junction, int roads) {
 		this.junctions= new ArrayList<Junction>();
@@ -55,31 +78,31 @@ public class Map {
 			arr[i]=new Junction(new String("" +i),new Point(x,y));	
 			this.junctions.add(arr[i]);
 		}
-		Road arrR[]=new Road[roads];
-		int g=0;
+			Road arrR[]=new Road[roads];
+			Road arrF[]=new Road[roads];
 		for (int i=0;i<arrR.length;i++){
 			int j=new Random().nextInt(arr.length);
 			int k=new Random().nextInt(arr.length);
-			while (j==k) {
-			j=new Random().nextInt(arr.length);
-			k=new Random().nextInt(arr.length);
-			}
+
 			if (!arr[j].equals(arr[k])) {
 				arrR[i]=new Road(arr[j],arr[k], VehicleType.getRandomListVehicleTypes(), false,true);
+				arrF[i]=new Road(arr[k],arr[j], VehicleType.getRandomListVehicleTypes(), false,true);
 				this.roads.add(arrR[i]);
 				//arr[i].changeLight();
 				arr[j].setExitingRoads(arrR[i]);
+				arr[j].setExitingRoads(arrF[i]);
 				arr[k].setEnteringRoads(arrR[i]);
-				if (g<arr.length) {
-					arr[g].setLightsOn();;
+				arr[k].setEnteringRoads(arrF[i]);
+				if (arr[j].getHasLight()) {
+					arr[j].changeLight();
 				}
 			}
 			else i--;
+		}
 			
 		}	
 		
 		
-	}
 	//CON- GET LIST of Junction and create ROADS(RANDOM)
 	public Map(ArrayList<Junction> juncs) {
 		this.junctions=juncs;

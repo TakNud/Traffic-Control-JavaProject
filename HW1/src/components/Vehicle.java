@@ -14,21 +14,32 @@ public class Vehicle {
 		this.id = id;
 		this.type = type;
 		this.lastJunction = lastJunction;
-		System.out.println(this.type+", AVG Speed:"+this.speed+", ID:"+this.id
+		this.speed=this.type.getSpeed();
+		System.out.println(this.type+ ", ID:"+this.id
 				+" has beed created and placed at Junction-> "+this.lastJunction.getNameJunc());
+		//Route route= new Route(lastJunction,lastRoad,type);
 		//this.currentRoute= 
 		//lastJunction.
 	}
+	public void setRoute(Route R) {
+		this.currentRoute=R;
+	}
+	public VehicleType getVehicleType() {
+		return this.type;
+	}
 	public String toString() {
-		return this.type+", AVG Speed:"+this.speed+", ID:"+this.id;
+		return this.type+", ID:"+this.id;
 	}
 	public void move() {
 		
 	}
 	public void status() {
 		
+		
 	}
 	public void checkIn() {
+		System.out.println(this.type+ ", ID:"+this.type.getName()+"is starting route from junction "+
+	this.lastJunction+ "to");
 		
 	}
 
