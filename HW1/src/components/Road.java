@@ -59,6 +59,15 @@ public class Road {
 	public double getLength() {
 		return this.countLength();
 	}
+	public Junction getFromJunc() {
+		return this.fromJunc;
+	}
+	public Junction getToJucn() {
+		return this.toJunc;
+	}
+	public boolean getIsOpen () {
+		return this.isOpen;
+	}
 	public void setIsOpen(boolean what) {
 		isOpen=what;
 		if (isOpen) {

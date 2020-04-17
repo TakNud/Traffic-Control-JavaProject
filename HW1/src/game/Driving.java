@@ -2,7 +2,9 @@ package game;
 
 import java.util.ArrayList;
 
+import components.Junction;
 import components.Map;
+import components.Road;
 import components.Route;
 import components.Vehicle;
 import components.VehicleType;
@@ -20,13 +22,40 @@ public class Driving {
 		this.currentMap=map;
 		currentVehicles= new ArrayList<Vehicle>();
 		numOfVehicles=0;
+		for (int i=0;i<vehicles;i++) {//create Vehicles
 		addVehicles();
-		for (int j=0; j<this.getVehicles().size();j++) {
-			Route route= new Route(this.currentMap.getJunctions(),this.currentMap.getRoads(),this.getVehicles().get(j).getVehicleType());
-			this.currentVehicles.get(j).setRoute(route);
+		addRoute4Vehicle(currentVehicles.get(i),map.getJunctions(),map.getRoads());
 		}
+		/* CHcking the Routes- not need anymore;
+		for (int i=0; i<currentVehicles.size();i++) {
+			System.out.println(currentVehicles.get(i).getCurrentRoute());
+		}
+		*/
 		
 		this.maxTime= maxTime;
+	}
+	public void addRoute4Vehicle(Vehicle v, ArrayList<Junction> juncs, ArrayList<Road> roads) {
+		//create list of junction with lastJunction:
+		ArrayList<Junction> listJunc= new ArrayList<Junction>();
+		ArrayList<Road> listRoad= new ArrayList<Road>();
+		listJunc.add(v.getLastJunction());// add The first junction
+		Random random= new Random();
+		int randFor= random.nextInt(juncs.size()-2)+2;// random num for junction for route
+		for (int i=0 ; i<randFor ; i++) {
+			int randJunction= random.nextInt(juncs.size());
+			if (!listJunc.contains(juncs.get(randJunction))) {// add junction to list if not exist
+				listJunc.add(juncs.get(randJunction));
+			}
+		}
+		for (int i=0 ; i<randFor ; i++) {
+			int randRoad= random.nextInt(roads.size());
+			if (!listRoad.contains(juncs.get(randRoad))) {// add junction to list if not exist
+				listRoad.add(roads.get(randRoad));
+			}
+		}
+		Route route = new Route (listJunc,listRoad,v.getVehicleType());
+		v.setRoute(route);
+		
 	}
 	
 	public void addMap() {
@@ -37,18 +66,30 @@ public class Driving {
 		
 	}
 	public void addVehicles() {
-		for ( int i=0; i<new Random().nextInt(6)+2;i++ ) {
+		//for ( int i=0; i<new Random().nextInt(6)+2;i++ ) {
 			int rand= new Random().nextInt(this.currentMap.getJunctions().size());
 			Vehicle vehicle= new Vehicle(numOfVehicles,VehicleType.getRandomVehicleTypes(),this.currentMap.getJunctions().get(rand));
 			numOfVehicles++;
 			this.currentVehicles.add(vehicle);
-		}
+		//}
 	}
 	public ArrayList<Vehicle> getVehicles(){
 		return this.currentVehicles;
 	}
 	public void startDrive (int maxTime) {
-		for (int i=0; i<maxTime ;i++) {
+		for (int i=0; i<maxTime ;i++) {// runnig maxTime= Rounds! 
+			System.out.println("Trun-> *"+i+"*");
+			for (int j=0; j<this.numOfVehicles;j++) {// runnig for all vehicles
+				System.out.println(this.getVehicles().get(j)+" is starting "+this.getVehicles().get(j).getCurrentRoute());// Print START Route
+				if (this.getVehicles().get(j).getLastJunction().getHasLight() && !this.getVehicles().get(j).getCurrentRoute().getCurrentRoad().getIsOpen()) {// check if have light & have red light
+					System.out.println(this.getVehicles().get(j)+" is waiting for green light in"+this.getVehicles().get(j).getLastJunction());
+				}
+				else {
+					System.out.println(this.getVehicles().get(j)+" has left "+this.getVehicles().get(j).getLastJunction());
+					this.getVehicles().get(j).move();
+				}
+					
+			}
 			
 			}
 		}

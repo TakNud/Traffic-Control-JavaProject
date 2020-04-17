@@ -22,6 +22,8 @@ public class Junction {
 		this.junctionName=name;
 		this.location=loc;
 		this.hasLights= new Random().nextBoolean();
+		if (hasLights)
+			this.delay= new Random().nextInt(10);
 		enetringRoads= new ArrayList<Road>();
 		exitingRoads=new ArrayList<Road>();
 		System.out.println("Junction:->"+this.junctionName+" has been created");
@@ -41,8 +43,16 @@ public class Junction {
 		else 
 			System.out.println("Junction"+this.junctionName+": no entering road. traffic lights cant be turn on!");
 	}
-		
-	public void checkAvailability(Road r) {
+		//check if this road exist in this junction
+	public boolean checkAvailability(Road r) {
+		//if (r.getFromJunc()==this) {
+			for (int i=0;i<this.exitingRoads.size();i++) {
+				if (r.getFromJunc()==this.exitingRoads.get(i).getFromJunc())
+					return true;
+			//}
+			
+		} 
+		return false;
 	
 	}
 	// check equals between 2 junction Objs 
@@ -62,11 +72,11 @@ public class Junction {
 		return this.enetringRoads;
 	}
 	public void setExitingRoads(Road e) {
-		exitingRoads.add(e);
+		this.exitingRoads.add(e);
 	}
 	
 	public void setEnteringRoads(Road e){
-		enetringRoads.add(e);
+		this.enetringRoads.add(e);
 	}
 	public String getNameJunc() {
 		return this.junctionName;
@@ -78,24 +88,23 @@ public class Junction {
 	public boolean getHasLight() {
 		return this.hasLights;
 	}
+	public Point getLocation(){
+		return location;	
+	}
+	public String toString() {
+		String jun= "Junction-"+ this.junctionName;
+		return jun;
+	}
+	//Not need anyMore:
 	public void setLightsOn() {
 		//this.hasLights=true;
-		this.delay=(int) (new Random().nextInt(10));
+		this.delay=(new Random().nextInt(10));
 		System.out.println("Junction"+this.getNameJunc()+
 				": traffic ligth ON. Delay time is :"+this.delay);
 			this.hasLights=true;
 			//int index= Integer.parseInt(junctionName);
 			this.exitingRoads.get(exitingRoads.size()).setIsOpen(true);
 		}
-	
-	public Point getLocation(){
-		return location;
-		
-	}
-	public String toString() {
-		String jun= "Junction-"+ this.junctionName;
-		return jun;
-	}
 	
 }
 

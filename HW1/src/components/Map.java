@@ -78,6 +78,7 @@ public class Map {
 			arr[i]=new Junction(new String("" +i),new Point(x,y));	
 			this.junctions.add(arr[i]);
 		}
+		//roads+=20;
 			Road arrR[]=new Road[roads];
 			Road arrF[]=new Road[roads];
 		for (int i=0;i<arrR.length;i++){
@@ -88,6 +89,7 @@ public class Map {
 				arrR[i]=new Road(arr[j],arr[k], VehicleType.getRandomListVehicleTypes(), false,true);
 				arrF[i]=new Road(arr[k],arr[j], VehicleType.getRandomListVehicleTypes(), false,true);
 				this.roads.add(arrR[i]);
+				//this.roads.add(arrF[i]);
 				//arr[i].changeLight();
 				arr[j].setExitingRoads(arrR[i]);
 				arr[j].setExitingRoads(arrF[i]);
