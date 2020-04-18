@@ -36,9 +36,13 @@ public class Junction {
 					": traffic ligth ON. Delay time is :"+this.delay);
 			for ( int i=0; i< this.exitingRoads.size();i++) {
 				this.exitingRoads.get(i).setIsOpen(false);
+				//System.out.println(this.exitingRoads.get(i).toString()+this.exitingRoads.get(i).getIsOpen());
 			}
-			int index= Integer.parseInt(junctionName);
-			this.exitingRoads.get(0).setIsOpen(true);
+			int index= new Random().nextInt(this.exitingRoads.size());
+			if (index>this.exitingRoads.size()-1) {
+				index-=1;
+			}
+			this.exitingRoads.get(index).setIsOpen(true);
 		}
 		else 
 			System.out.println("Junction"+this.junctionName+": no entering road. traffic lights cant be turn on!");

@@ -35,6 +35,12 @@ public class Vehicle {
 	public Junction getLastJunction() {
 		return this.lastJunction;
 	}
+	public Road getLastRoad() {
+		return this.lastRoad;
+	}
+	public void setLastRoad(Road R) {
+		this.lastRoad=R;
+	}
 	public void setLastJunction(Junction j) {// setting last junction when get a route
 		this.lastJunction=j;
 	}
@@ -42,17 +48,22 @@ public class Vehicle {
 		return this.type+", ID:"+this.id;
 	}
 	public void move() {
-		this.movesNow=true;
-		if (this.currentRoute.getJunctions().get(0).checkAvailability(this.currentRoute.getCurrentRoad())) {
-			this.currentRoute.getJunctions().remove(0);
-			this.lastJunction=this.currentRoute.getJunctions().get(0);
-			System.out.println(this.toString()+"is moving on "+this.lastRoad);
-			this.lastRoad= this.currentRoute.getRoads().get(1);
-			this.currentRoute.getRoads().remove(0);
+		if (this.currentRoute.getJunctions().isEmpty()==false&& this.currentRoute.getRoads().isEmpty()==false) {
+			//if (this.currentRoute.getJunctions().get(0).checkAvailability(this.currentRoute.getCurrentRoad())) {
+				this.movesNow=true;
+				//this.lastRoad= this.currentRoute.getRoads().get(0);
+				this.currentRoute.getJunctions().remove(0);
+				this.lastJunction=this.currentRoute.getJunctions().get(0);
+				System.out.println(this.toString()+"is moving on "+this.lastRoad);
+				this.currentRoute.getRoads().remove(0);
+				if (this.currentRoute.getRoads().isEmpty()==false)
+					this.lastRoad= this.currentRoute.getRoads().get(0);
+			//}
+		//else 
+			//System.out.println(this.toString()+" is stay at "+ this.lastJunction+"-- no existing road");
 		}
-		else {
+		else 
 			System.out.println(this.toString()+" is stay at "+ this.lastJunction+"-- no existing road");
-		}
 		
 	}
 	public void status() {

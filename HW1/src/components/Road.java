@@ -69,8 +69,8 @@ public class Road {
 		return this.isOpen;
 	}
 	public void setIsOpen(boolean what) {
-		isOpen=what;
-		if (isOpen) {
+		this.isOpen=what;
+		if (this.isOpen) {
 			System.out.println("Road from "+ this.fromJunc.getNameJunc() +" to-->"+
 			this.toJunc.getNameJunc()+": Green Light");
 		}

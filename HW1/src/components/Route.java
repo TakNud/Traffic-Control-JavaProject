@@ -59,7 +59,9 @@ public class Route {
 	public ArrayList<Junction> getJunctions() {
 		return this.junctions;
 	}
-
+	public double getDelay() {
+		return this.delay;
+	}
 	// return the point start route- Start Junc
 	public Junction getStart() {
 		return this.junctions.get(0);
@@ -75,7 +77,8 @@ public class Route {
 		return this.roads;
 	}
 	public void calcDelay() {
-		double sum=0,distanceT = 0,time;
+		double distanceT = 0,time;
+		int  sum=0;
 		int minSpeed;
 		for ( int i=0;i<this.junctions.size();i++) {
 			sum+= this.junctions.get(i).getDelay();
@@ -87,6 +90,7 @@ public class Route {
 				distanceT += this.roads.get(i).countLength()/this.vehicleType.getSpeed();
 		}
 		this.delay= sum+distanceT;
+		System.out.println(this.delay);
 	}
 	public String toString() {
 		return "route from- "+this.getStart()+" to -> "+this.getEnd();

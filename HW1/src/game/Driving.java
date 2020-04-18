@@ -23,15 +23,9 @@ public class Driving {
 		currentVehicles= new ArrayList<Vehicle>();
 		numOfVehicles=0;
 		for (int i=0;i<vehicles;i++) {//create Vehicles
-		addVehicles();
-		addRoute4Vehicle(currentVehicles.get(i),map.getJunctions(),map.getRoads());
+			addVehicles();
+			addRoute4Vehicle(currentVehicles.get(i),map.getJunctions(),map.getRoads());
 		}
-		/* CHcking the Routes- not need anymore;
-		for (int i=0; i<currentVehicles.size();i++) {
-			System.out.println(currentVehicles.get(i).getCurrentRoute());
-		}
-		*/
-		
 		this.maxTime= maxTime;
 	}
 	public void addRoute4Vehicle(Vehicle v, ArrayList<Junction> juncs, ArrayList<Road> roads) {
@@ -39,24 +33,32 @@ public class Driving {
 		ArrayList<Junction> listJunc= new ArrayList<Junction>();
 		ArrayList<Road> listRoad= new ArrayList<Road>();
 		listJunc.add(v.getLastJunction());// add The first junction
-		Random random= new Random();
-		int randFor= random.nextInt(juncs.size()-2)+2;// random num for junction for route
-		for (int i=0 ; i<randFor ; i++) {
-			int randJunction= random.nextInt(juncs.size());
-			if (!listJunc.contains(juncs.get(randJunction))) {// add junction to list if not exist
-				listJunc.add(juncs.get(randJunction));
-			}
+		if (listJunc.get(0).getExitingRoads().isEmpty()==false){
+			v.setLastRoad(listJunc.get(0).getExitingRoads().get(0));
 		}
-		for (int i=0 ; i<randFor ; i++) {
-			int randRoad= random.nextInt(roads.size());
-			if (!listRoad.contains(juncs.get(randRoad))) {// add junction to list if not exist
-				listRoad.add(roads.get(randRoad));
-			}
+		boolean flag=false; // flag to know if ExitRoad is empty
+		if (listJunc.get(0).getExitingRoads().isEmpty()==false){
+			listRoad.add(listJunc.get(0).getExitingRoads().get(0));// add the first road
+			flag=true;
 		}
+		int index=0;
+		if (flag== true) {
+			do {
+				if (listJunc.get(index)!=listRoad.get(index).getToJucn()) {
+					listJunc.add(listRoad.get(index).getToJucn());
+					index++;
+					if (!listJunc.get(index).getExitingRoads().isEmpty())
+						listRoad.add(listJunc.get(index).getExitingRoads().get(0));
+					else
+						flag=false;
+				}
+			}while((!listJunc.get(index).getExitingRoads().isEmpty() && listJunc.size()<10) && flag==true ) ;// loop for add 10 juncs or arrive to no exit road.
+		}	
 		Route route = new Route (listJunc,listRoad,v.getVehicleType());
 		v.setRoute(route);
 		
 	}
+
 	
 	public void addMap() {
 		int numOfJunc= new Random().nextInt(10)+15;
@@ -79,20 +81,28 @@ public class Driving {
 	public void startDrive (int maxTime) {
 		for (int i=0; i<maxTime ;i++) {// runnig maxTime= Rounds! 
 			System.out.println("Trun-> *"+i+"*");
-			for (int j=0; j<this.numOfVehicles;j++) {// runnig for all vehicles
+			for (int j=0; j<this.getVehicles().size();j++) {// runnig for all vehicles
 				System.out.println(this.getVehicles().get(j)+" is starting "+this.getVehicles().get(j).getCurrentRoute());// Print START Route
-				if (this.getVehicles().get(j).getLastJunction().getHasLight() && !this.getVehicles().get(j).getCurrentRoute().getCurrentRoad().getIsOpen()) {// check if have light & have red light
+				if ( !this.getVehicles().get(j).getLastRoad().getIsOpen()) {// check if have light & have red light
 					System.out.println(this.getVehicles().get(j)+" is waiting for green light in"+this.getVehicles().get(j).getLastJunction());
 				}
-				else {
+				else {// THE MOVE step
 					System.out.println(this.getVehicles().get(j)+" has left "+this.getVehicles().get(j).getLastJunction());
 					this.getVehicles().get(j).move();
-				}
-					
+					if (this.getVehicles().get(j).getLastJunction()==this.getVehicles().get(j).getCurrentRoute().getEnd()) {
+						System.out.println(this.getVehicles().get(j)+" is Arrive to DST-->"+ this.getVehicles().get(j).getCurrentRoute().getEnd());
+						this.getVehicles().get(j).getCurrentRoute().calcDelay();
+						System.out.println(this.getVehicles().get(j)+ " has finished the route. Total time is: "+this.getVehicles().get(j).getCurrentRoute().getDelay());
+						this.getVehicles().remove(j);
+					}
+				}		
 			}
-			
+			for (int j=0; j<this.getVehicles().size();j++) {// runnig for all vehicles
+				if (this.getVehicles().get(j).getLastJunction().getHasLight() ) {
+					this.getVehicles().get(j).getLastJunction().changeLight();
+					}
 			}
 		}
 
-
+	}
 }

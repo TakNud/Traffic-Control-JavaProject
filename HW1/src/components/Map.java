@@ -79,27 +79,19 @@ public class Map {
 			this.junctions.add(arr[i]);
 		}
 		//roads+=20;
-			Road arrR[]=new Road[roads];
-			Road arrF[]=new Road[roads];
-		for (int i=0;i<arrR.length;i++){
-			int j=new Random().nextInt(arr.length);
-			int k=new Random().nextInt(arr.length);
-
-			if (!arr[j].equals(arr[k])) {
-				arrR[i]=new Road(arr[j],arr[k], VehicleType.getRandomListVehicleTypes(), false,true);
-				arrF[i]=new Road(arr[k],arr[j], VehicleType.getRandomListVehicleTypes(), false,true);
-				this.roads.add(arrR[i]);
-				//this.roads.add(arrF[i]);
-				//arr[i].changeLight();
-				arr[j].setExitingRoads(arrR[i]);
-				arr[j].setExitingRoads(arrF[i]);
-				arr[k].setEnteringRoads(arrR[i]);
-				arr[k].setEnteringRoads(arrF[i]);
-				if (arr[j].getHasLight()) {
-					arr[j].changeLight();
+		for (int i=0;i<junction;i++) {
+			for (int j=0;j<junction;j++) {
+				if (j!=i) {
+					Road F= new Road(this.junctions.get(i),this.junctions.get(j));
+					this.junctions.get(i).setExitingRoads(F);
+					this.junctions.get(j).setEnteringRoads(F);
+					this.addRoad(F);
+					if (this.junctions.get(i).getHasLight()) {
+						this.junctions.get(i).changeLight();
+					}
 				}
 			}
-			else i--;
+		
 		}
 			
 		}	
