@@ -19,34 +19,7 @@ public class Route {
 		
 	//}
 	public Route (ArrayList<Junction> juncs, ArrayList<Road> getRoads, VehicleType vehType) {
-		/*
-		// create roads for the junction
-		for (int i=0;i<juncs.size()-1;i++) {// runnig of all juncs
-			for (int j=0; j<juncs.get(i).getExitingRoads().size()-1;j++) {// runnig for all exitingRoad of this junc
-				//if (juncs.get(i).getExitingRoads().get(j).getToJucn()==juncs.get(i+1)&& !roads.contains(juncs.get(i).getExitingRoads().get(j))) {//check if not exist on list and if the road true
-				int rand= new Random().nextInt(juncs.get(i).getExitingRoads().size())-1;
-				if (rand>-1) {
-					if (!roads.contains(juncs.get(i).getExitingRoads().get(rand)))
-						this.roads.add(juncs.get(i).getExitingRoads().get(rand));
-				}
-			}
-		}
-			*/
-		/*
-		this.roads= new ArrayList <Road>();
-		if (juncs.get(0).getExitingRoads().get(0)!=null)
-			this.roads.add(juncs.get(0).getExitingRoads().get(0));
-		Random rand= new Random();
-		int randFor= rand.nextInt(getRoads.size());
-		for (int i=0;i<randFor;i++) {
-			int randRoad= rand.nextInt(getRoads.size()-1);
-			if (randRoad>-1) {
-				if (!this.roads.contains(getRoads.get(randRoad))) {
-					this.roads.add(getRoads.get(randRoad));
-				}
-			}
-		}
-		*/
+		
 		this.roads=getRoads;
 		this.junctions=juncs;
 		this.vehicleType=vehType;
@@ -84,13 +57,12 @@ public class Route {
 			sum+= this.junctions.get(i).getDelay();
 			//Check min Speed
 			if (this.vehicleType.getSpeed()<this.roads.get(i).getMaxSpeed()) {
-				distanceT += this.roads.get(i).countLength()/this.roads.get(i).getMaxSpeed(); //Calc time by diving len in maxSpeed
+				distanceT += this.roads.get(i).getLength()/this.roads.get(i).getMaxSpeed(); //Calc time by diving len in maxSpeed
 			}
 			else
-				distanceT += this.roads.get(i).countLength()/this.vehicleType.getSpeed();
+				distanceT += this.roads.get(i).getLength()/this.vehicleType.getSpeed();
 		}
 		this.delay= sum+distanceT;
-		System.out.println(this.delay);
 	}
 	public String toString() {
 		return "route from- "+this.getStart()+" to -> "+this.getEnd();

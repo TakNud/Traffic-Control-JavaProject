@@ -48,13 +48,15 @@ public class Vehicle {
 		return this.type+", ID:"+this.id;
 	}
 	public void move() {
-		if (this.currentRoute.getJunctions().isEmpty()==false&& this.currentRoute.getRoads().isEmpty()==false) {
+		//CHECKING: have more junction, have more roads, allowed Vehicle .
+		if (this.currentRoute.getJunctions().isEmpty()==false&& this.currentRoute.getRoads().isEmpty()==false && this.getCurrentRoute().getCurrentRoad().getAllowedVehicle().contains(this.type)) {
 			//if (this.currentRoute.getJunctions().get(0).checkAvailability(this.currentRoute.getCurrentRoad())) {
 				this.movesNow=true;
 				//this.lastRoad= this.currentRoute.getRoads().get(0);
 				this.currentRoute.getJunctions().remove(0);
 				this.lastJunction=this.currentRoute.getJunctions().get(0);
-				System.out.println(this.toString()+"is moving on "+this.lastRoad);
+				this.currentRoute.calcDelay();
+				System.out.println(this.toString()+"is moving on "+this.lastRoad+" Delay time:"+this.currentRoute.getDelay());
 				this.currentRoute.getRoads().remove(0);
 				if (this.currentRoute.getRoads().isEmpty()==false)
 					this.lastRoad= this.currentRoute.getRoads().get(0);

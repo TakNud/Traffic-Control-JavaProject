@@ -36,7 +36,7 @@ public class Junction {
 					": traffic ligth ON. Delay time is :"+this.delay);
 			for ( int i=0; i< this.exitingRoads.size();i++) {
 				this.exitingRoads.get(i).setIsOpen(false);
-				//System.out.println(this.exitingRoads.get(i).toString()+this.exitingRoads.get(i).getIsOpen());
+				//System.out.println(this.exitingRoads.get(i).toString()+this.exitingRoads.get(i).getIsOpen()); Checking if work! 
 			}
 			int index= new Random().nextInt(this.exitingRoads.size());
 			if (index>this.exitingRoads.size()-1) {

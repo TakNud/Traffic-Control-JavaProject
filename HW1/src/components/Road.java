@@ -19,7 +19,7 @@ public class Road {
 		this.allowedVehicles= VehicleType.getRandomListVehicleTypes();
 		this.isOpen= new Random().nextBoolean();
 		this.isEnabled= new Random().nextBoolean();
-		this.length= this.countLength();
+		this.countLength();
 		this.maxSpeed= new Random().nextInt(100);
 		System.out.println(this.toString() + " has been created");
 	}
@@ -29,7 +29,7 @@ public class Road {
 		this.allowedVehicles= allowed;
 		this.isOpen=open;
 		this.isEnabled= enabled;
-		this.length= this.countLength();
+		this.countLength();
 		this.maxSpeed= new Random().nextInt(100);
 		System.out.println(this.toString() + " has been created");
 	}
@@ -39,13 +39,13 @@ public class Road {
 		
 	}
 	//Calculate the length beetween roads
-	public double countLength() {
-		double calcX=Math.abs(this.toJunc.getLocation().getX())-
-				Math.abs(this.fromJunc.getLocation().getX());
-		double calcY= Math.abs(this.toJunc.getLocation().getY())-
-				Math.abs(this.fromJunc.getLocation().getY());
-		this.length = Math.pow(calcX,calcX)+Math.pow(calcY,calcY);
-		return Math.sqrt(this.length);
+	public void countLength() {
+		double calcX=Math.abs((this.toJunc.getLocation().getX())-
+				(this.fromJunc.getLocation().getX()));
+		double calcY= Math.abs((this.toJunc.getLocation().getY())-
+				(this.fromJunc.getLocation().getY()));
+		double sum = Math.pow(calcX,2)+Math.pow(calcY,2);
+		this.length= Math.sqrt(sum);
 		
 		
 	}
@@ -57,7 +57,7 @@ public class Road {
 		return this.allowedVehicles;
 	}
 	public double getLength() {
-		return this.countLength();
+		return this.length;
 	}
 	public Junction getFromJunc() {
 		return this.fromJunc;
