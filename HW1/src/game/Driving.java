@@ -35,7 +35,7 @@ public class Driving {
 		Random rand= new Random();
 		listJunc.add(v.getLastJunction());// add The first junction
 		if (listJunc.get(0).getExitingRoads().isEmpty()==false){
-			v.setLastRoad(listJunc.get(0).getExitingRoads().get(0));
+			//v.setLastRoad(listJunc.get(0).getExitingRoads().get(0));
 		}
 		boolean flag=false; // flag to know if ExitRoad is empty
 		if (listJunc.get(0).getExitingRoads().isEmpty()==false){
@@ -82,7 +82,10 @@ public class Driving {
 			int rand= new Random().nextInt(this.currentMap.getJunctions().size());
 			Vehicle vehicle= new Vehicle(numOfVehicles,VehicleType.getRandomVehicleTypes(),this.currentMap.getJunctions().get(rand));
 			numOfVehicles++;
+			int rand2= (int) (Math.random()*this.currentMap.getJunctions().get(rand).getEnteringRoads().size());
+			vehicle.setLastRoad(this.currentMap.getJunctions().get(rand).getEnteringRoads().get(rand2));
 			this.currentVehicles.add(vehicle);
+			//this.currentVehicles.get().
 		//}
 	}
 	public ArrayList<Vehicle> getVehicles(){
@@ -92,27 +95,31 @@ public class Driving {
 		for (int i=0; i<maxTime ;i++) {// runnig maxTime= Rounds! 
 			System.out.println("Trun-> ***"+i+1+"***");
 			for (int j=0; j<this.getVehicles().size();j++) {// runnig for all vehicles
-				System.out.println(this.getVehicles().get(j)+" is starting "+this.getVehicles().get(j).getCurrentRoute());// Print START Route
+				if (this.getVehicles().get(j).getCurrentRoute().getStart()== this.currentVehicles.get(j).getLastJunction())
+					System.out.println(this.getVehicles().get(j)+" is starting "+this.getVehicles().get(j).getCurrentRoute());// Print START Route
 				if ( !this.getVehicles().get(j).getLastRoad().getIsOpen()) {// check if have light & have red light
 					System.out.println(this.getVehicles().get(j)+" is waiting for green light in"+this.getVehicles().get(j).getLastJunction());
+					System.out.println(this.getVehicles().get(j).getLastRoad());
 				}
 				else {// THE MOVE step
 					System.out.println(this.getVehicles().get(j)+" has left "+this.getVehicles().get(j).getLastJunction());
 					this.getVehicles().get(j).move();
+					System.out.println(this.getVehicles().get(j)+" is Arrive to "+ this.getVehicles().get(j).getLastJunction());
 					if (this.getVehicles().get(j).getLastJunction()==this.getVehicles().get(j).getCurrentRoute().getEnd()) {
 						System.out.println(this.getVehicles().get(j)+" is Arrive to DST-->"+ this.getVehicles().get(j).getCurrentRoute().getEnd());
-						this.getVehicles().get(j).getCurrentRoute().calcDelay();
 						System.out.println(this.getVehicles().get(j)+ " has finished the route. Total time is: "+this.getVehicles().get(j).getCurrentRoute().getDelay());
-						//this.getVehicles().remove(j);
-						this.addRoute4Vehicle(this.getVehicles().get(j), this.currentMap.getJunctions(), this.currentMap.getRoads());
+						this.addRoute4Vehicle(this.getVehicles().get(j), this.currentMap.getJunctions(), this.currentMap.getRoads());//create new route for vehicle finished
 					}
 				}		
 			}
-			for (int j=0; j<this.getVehicles().size();j++) {// runnig for all vehicles to change random traffic light
-				if (this.getVehicles().get(j).getLastJunction().getHasLight() ) {
-					this.getVehicles().get(j).getLastJunction().changeLight();
-					}
+			for (int j=0; j<this.currentMap.getJunctions().size();j++) {// runnig for all vehicles to change traffic light ertujnq
+					this.currentMap.getJunctions().get(j).changeLight();
+					
 			}
+		}
+		System.out.println("****STATUS****");
+		for (int i=0 ; i<this.getVehicles().size(); i++) {
+			this.getVehicles().get(i).status();
 		}
 
 	}

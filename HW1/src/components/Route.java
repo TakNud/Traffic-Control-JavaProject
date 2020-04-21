@@ -53,6 +53,19 @@ public class Route {
 		double distanceT = 0,time;
 		int  sum=0;
 		int minSpeed;
+		int i=0;
+		while (i<this.junctions.size()&&this.junctions.get(i)!= this.getCurrentRoad().getFromJunc() ) {
+			sum+= this.junctions.get(i).getDelay();
+			//Check min Speed
+			if (this.vehicleType.getSpeed()<this.roads.get(i).getMaxSpeed()) {
+				distanceT += this.roads.get(i).getLength()/this.roads.get(i).getMaxSpeed(); //Calc time by diving len in maxSpeed
+			}
+			else
+				distanceT += this.roads.get(i).getLength()/this.vehicleType.getSpeed();
+			i++;
+		}
+		
+		/*
 		for ( int i=0;i<this.junctions.size();i++) {
 			sum+= this.junctions.get(i).getDelay();
 			//Check min Speed
@@ -62,6 +75,7 @@ public class Route {
 			else
 				distanceT += this.roads.get(i).getLength()/this.vehicleType.getSpeed();
 		}
+		*/
 		this.delay= sum+distanceT;
 	}
 	public String toString() {

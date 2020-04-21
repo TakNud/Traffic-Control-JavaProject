@@ -15,12 +15,8 @@ public class Vehicle {
 		this.type = type;
 		this.lastJunction = lastJunction;
 		this.speed=this.type.getSpeed();
-		//lastRoad= lastJunction;
 		System.out.println(this.type+ ", ID:"+this.id
 				+" has beed created and placed at Junction-> "+this.lastJunction.getNameJunc());
-		//Route route= new Route(lastJunction,lastRoad,type);
-		//this.currentRoute= 
-		//lastJunction.
 	}
 	public void setRoute(Route R) {
 		//if (R.getStart()==this.lastJunction)
@@ -49,18 +45,17 @@ public class Vehicle {
 	}
 	public void move() {
 		//CHECKING: have more junction, have more roads, allowed Vehicle .
-		if (this.currentRoute.getJunctions().isEmpty()==false&& this.currentRoute.getRoads().isEmpty()==false && this.getCurrentRoute().getCurrentRoad().getAllowedVehicle().contains(this.type)) {
-			//if (this.currentRoute.getJunctions().get(0).checkAvailability(this.currentRoute.getCurrentRoad())) {
+		if (this.currentRoute.getJunctions().isEmpty()==false&& this.currentRoute.getRoads().isEmpty()==false ) {//&& this.getCurrentRoute().getCurrentRoad().getAllowedVehicle().contains(this.type)) {
+			if (this.currentRoute.getJunctions().get(0).checkAvailability(this.currentRoute.getCurrentRoad())) {
 				this.movesNow=true;
-				//this.lastRoad= this.currentRoute.getRoads().get(0);
-				this.currentRoute.getJunctions().remove(0);
-				this.lastJunction=this.currentRoute.getJunctions().get(0);
-				this.currentRoute.calcDelay();
+				this.checkIn();
+				this.spentTime= this.currentRoute.getDelay();
 				System.out.println(this.toString()+"is moving on "+this.lastRoad+" Delay time:"+this.currentRoute.getDelay());
 				this.currentRoute.getRoads().remove(0);
 				if (this.currentRoute.getRoads().isEmpty()==false)
 					this.lastRoad= this.currentRoute.getRoads().get(0);
-			//}
+
+			}
 		//else 
 			//System.out.println(this.toString()+" is stay at "+ this.lastJunction+"-- no existing road");
 		}
@@ -68,13 +63,17 @@ public class Vehicle {
 			System.out.println(this.toString()+" is stay at "+ this.lastJunction+"-- no existing road");
 		
 	}
+	//REturn if vehicle move  or not 
 	public void status() {
+		System.out.println(this.toString()+" Position:"+ this.lastJunction+ ", Current Route:"+ this.currentRoute + ", Time Spent:"+
+	this.spentTime);
 		
 		
 	}
 	public void checkIn() {
-		System.out.println(this.type+ ", ID:"+this.type.getName()+"is starting route from junction "+
-	this.lastJunction+ "to");
+		this.currentRoute.getJunctions().remove(0);
+		this.lastJunction=this.currentRoute.getJunctions().get(0);
+		this.currentRoute.calcDelay();
 		
 	}
 

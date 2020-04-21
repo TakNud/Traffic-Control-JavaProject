@@ -14,6 +14,7 @@ public class Junction {
 	private boolean hasLights;
 	private int delay;
 	private ArrayList<Road> vehicles;
+	int count =0;// helper
 	
 	//Constructor
 	public Junction () {
@@ -31,21 +32,44 @@ public class Junction {
 	}
 	//
 	public void changeLight() {
+		if (!this.enetringRoads.isEmpty()) {
+			if (this.enetringRoads.size()>count) {
+				this.enetringRoads.get(count).setIsOpen(true);
+				for (int i=0; i<this.exitingRoads.size();i++) {
+					this.exitingRoads.get(i).setIsOpen(false);
+				}
+				count++;
+				
+			}
+			else {
+				count=0;
+				this.enetringRoads.get(count).setIsOpen(true);
+				count++;
+				for(int i=0; i<this.exitingRoads.size();i++) {
+					this.exitingRoads.get(i).setIsOpen(false);
+				}
+			}
+		}
+		/*
 		if (hasLights) {
 			System.out.println("Junction"+this.getNameJunc()+
 					": traffic ligth ON. Delay time is :"+this.delay);
-			for ( int i=0; i< this.exitingRoads.size();i++) {
-				this.exitingRoads.get(i).setIsOpen(false);
+			for ( int i=1; i< this.enetringRoads.size();i++) {
+				this.enetringRoads.get(i).setIsOpen(false);
 				//System.out.println(this.exitingRoads.get(i).toString()+this.exitingRoads.get(i).getIsOpen()); Checking if work! 
 			}
+			
 			int index= new Random().nextInt(this.exitingRoads.size());
 			if (index>this.exitingRoads.size()-1) {
 				index-=1;
 			}
+			
 			this.exitingRoads.get(index).setIsOpen(true);
 		}
 		else 
 			System.out.println("Junction"+this.junctionName+": no entering road. traffic lights cant be turn on!");
+	}
+	*/
 	}
 		//check if this road exist in this junction
 	public boolean checkAvailability(Road r) {
@@ -59,6 +83,8 @@ public class Junction {
 		return false;
 	
 	}
+	
+	
 	// check equals between 2 junction Objs 
 	public boolean equals(Junction other) {
 		 if (junctionName== other.junctionName) {
@@ -69,6 +95,9 @@ public class Junction {
 	}
 	////SETters--&&--GETters
 	// return list of exiting road
+	public void setVehicle(Road R) {
+		this.vehicles.add(R);
+	}
 	public ArrayList<Road> getExitingRoads() {
 		return this.exitingRoads;
 	}
@@ -105,7 +134,7 @@ public class Junction {
 		this.delay=(new Random().nextInt(10));
 		System.out.println("Junction"+this.getNameJunc()+
 				": traffic ligth ON. Delay time is :"+this.delay);
-			this.hasLights=true;
+			//this.hasLights=true;
 			//int index= Integer.parseInt(junctionName);
 			this.exitingRoads.get(exitingRoads.size()).setIsOpen(true);
 		}
