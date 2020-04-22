@@ -93,7 +93,7 @@ public class Driving {
 	}
 	public void startDrive (int maxTime) {
 		for (int i=0; i<maxTime ;i++) {// runnig maxTime= Rounds! 
-			System.out.println("Trun-> ***"+i+1+"***");
+			System.out.println("Trun-> ***"+i+"***");
 			for (int j=0; j<this.getVehicles().size();j++) {// runnig for all vehicles
 				if (this.getVehicles().get(j).getCurrentRoute().getStart()== this.currentVehicles.get(j).getLastJunction())
 					System.out.println(this.getVehicles().get(j)+" is starting "+this.getVehicles().get(j).getCurrentRoute());// Print START Route
